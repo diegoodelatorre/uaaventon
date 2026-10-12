@@ -27,3 +27,4 @@ The database schema includes the following core entities to support the defined 
 - **Trips:** Central entity linking the driver, vehicle, schedule, route, and capacity.
 - **Trip_Passengers (Junction Table):** Resolves the many-to-many relationship between passengers and trips while tracking booking statuses.
 - **Ratings:** Stores user feedback and reviews following trip completion.
+`![ER Model](./img/er_model.png)`
