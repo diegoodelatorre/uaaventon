@@ -11,6 +11,8 @@ CREATE TABLE users (
     phone_number VARCHAR(15),
     driver_rating DECIMAL(3,2) DEFAULT 0.0,
     passenger_rating DECIMAL(3,2) DEFAULT 0.0,
+    is_driver BOOLEAN DEFAULT FALSE,
+    license_number VARCHAR(50) NULL,
     is_enabled BOOLEAN DEFAULT TRUE,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
@@ -36,6 +38,8 @@ CREATE TABLE trips (
     vehicle_id INT NOT NULL,
     origin_point VARCHAR(100) NOT NULL,
     destination_point VARCHAR(100) NOT NULL,
+    destination_lat DECIMAL(10,8) NULL,
+    destination_lng DECIMAL(11,8) NULL,
     total_seats INT NOT NULL,
     available_seats INT NOT NULL,
     price_per_seat DECIMAL(10,2) DEFAULT 0.00,
