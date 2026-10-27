@@ -1,7 +1,7 @@
-
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import authRoutes from './routes/auth.routes.js';
 
 dotenv.config();
 
@@ -11,8 +11,10 @@ const port = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json());
 
+app.use('/api/auth', authRoutes);
+
 app.get('/', (req, res) => {
-  res.send('Servidor de UAAventon funcionando correctamente');
+  res.send('Servidor de UAAventon funcionando correctamente 🚗');
 });
 
 app.listen(port, () => {
