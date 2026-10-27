@@ -1,37 +1,182 @@
-<div class="min-h-screen flex items-center justify-center bg-gray-100">
-  <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
-    <h2 class="text-2xl font-bold text-center text-blue-900 mb-6">Registro UAAventon</h2>
-    
-    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="space-y-4">
-      <div>
-        <label class="block text-sm font-medium text-gray-700">Nombre(s)</label>
-        <input formControlName="first_name" type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 border">
+<main class="min-h-screen flex flex-col lg:flex-row bg-white font-['Inter',sans-serif]">
+  
+  <section class="hidden lg:flex lg:w-[45%] bg-[#00468C] text-white p-12 xl:p-16 flex-col justify-between relative overflow-hidden">
+    <div class="absolute -top-24 -right-24 w-96 h-96 rounded-full border border-white/10 pointer-events-none"></div>
+    <div class="absolute -bottom-32 -left-32 w-[500px] h-[500px] rounded-full border border-white/10 pointer-events-none"></div>
+
+    <a href="/register" class="flex items-center gap-3 z-10">
+      <div class="w-10 h-10 bg-white text-[#00468C] rounded-xl flex items-center justify-center text-lg shadow-sm">
+        <i class="fa-solid fa-route"></i>
+      </div>
+      <span class="text-2xl font-extrabold tracking-tight text-white">
+        UAA<span class="font-semibold text-blue-200">ventón</span>
+      </span>
+    </a>
+
+    <div class="my-auto py-12 z-10 max-w-md">
+      <span class="text-xs font-bold uppercase tracking-widest text-blue-200 block mb-3">
+        ÚNETE A UAAVENTÓN
+      </span>
+      <h1 class="text-4xl xl:text-5xl font-extrabold leading-tight mb-6">
+        La comunidad se mueve <span class="text-blue-200 block">mejor junta.</span>
+      </h1>
+      <p class="text-blue-100/90 text-base leading-relaxed mb-10">
+        Crea tu cuenta y comienza a encontrar estudiantes que comparten tu camino.
+      </p>
+
+      <div class="space-y-4">
+        <div class="flex items-center gap-4">
+          <div class="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center text-blue-200 shrink-0">
+            <i class="fa-solid fa-magnifying-glass text-sm"></i>
+          </div>
+          <span class="text-sm font-medium text-blue-50">Encuentra viajes compatibles con tu destino.</span>
+        </div>
+
+        <div class="flex items-center gap-4">
+          <div class="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center text-blue-200 shrink-0">
+            <i class="fa-solid fa-route text-sm"></i>
+          </div>
+          <span class="text-sm font-medium text-blue-50">Elige puntos intermedios dentro de la ruta.</span>
+        </div>
+
+        <div class="flex items-center gap-4">
+          <div class="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center text-blue-200 shrink-0">
+            <i class="fa-solid fa-car text-sm"></i>
+          </div>
+          <span class="text-sm font-medium text-blue-50">Activa tu perfil de conductor cuando quieras.</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="text-xs text-blue-200/60 z-10">
+      © 2026 UAAventón · Comunidad Estudiantil UAA
+    </div>
+  </section>
+
+  <section class="flex-1 flex items-center justify-center p-6 sm:p-12 lg:p-16 bg-white">
+    <div class="w-full max-w-lg">
+      
+      <div class="lg:hidden mb-8">
+        <a href="/register" class="inline-flex items-center gap-3">
+          <div class="w-10 h-10 bg-[#00468C] text-white rounded-xl flex items-center justify-center text-lg shadow-sm">
+            <i class="fa-solid fa-route"></i>
+          </div>
+          <span class="text-2xl font-extrabold tracking-tight text-slate-900">
+            UAA<span class="text-[#0052A5]">ventón</span>
+          </span>
+        </a>
       </div>
 
-      <div>
-        <label class="block text-sm font-medium text-gray-700">Apellidos</label>
-        <input formControlName="last_name" type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 border">
-      </div>
-
-      <div>
-        <label class="block text-sm font-medium text-gray-700">Correo Institucional</label>
-        <input formControlName="uaa_email" type="email" placeholder="ejemplo@edu.uaa.mx" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 border">
-        <span *ngIf="registerForm.get('uaa_email')?.hasError('nonInstitutionalEmail') && registerForm.get('uaa_email')?.touched" class="text-red-500 text-xs">
-          Debe ser un correo &#64;edu.uaa.mx
+      <div class="mb-8">
+        <span class="text-xs font-bold uppercase tracking-wider text-[#0052A5] block mb-2">
+          CREA TU CUENTA
         </span>
+        <h2 class="text-3xl font-extrabold text-slate-900 tracking-tight mb-2">
+          Comienza tu camino
+        </h2>
+        <p class="text-sm text-slate-500">
+          Necesitamos algunos datos para identificarte como estudiante.
+        </p>
       </div>
 
-      <div>
-        <label class="block text-sm font-medium text-gray-700">Contraseña</label>
-        <input formControlName="password" type="password" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 border">
-      </div>
+      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="space-y-5">
+        
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-bold text-slate-800 mb-2">Nombre(s)</label>
+            <div class="relative flex items-center">
+              <i class="fa-regular fa-user absolute left-4 text-slate-400 text-sm pointer-events-none"></i>
+              <input 
+                formControlName="first_name" 
+                type="text" 
+                placeholder="Tu nombre"
+                class="w-full pl-11 pr-4 py-3 bg-white border border-slate-200 rounded-xl text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:border-[#0052A5] focus:ring-2 focus:ring-[#0052A5]/15 transition-all"
+              >
+            </div>
+          </div>
 
-      <button type="submit" [disabled]="registerForm.invalid" class="w-full bg-blue-600 text-white font-bold py-2 px-4 rounded hover:bg-blue-700 disabled:opacity-50">
-        Registrarse
-      </button>
+          <div>
+            <label class="block text-xs font-bold text-slate-800 mb-2">Apellidos</label>
+            <div class="relative flex items-center">
+              <i class="fa-regular fa-user absolute left-4 text-slate-400 text-sm pointer-events-none"></i>
+              <input 
+                formControlName="last_name" 
+                type="text" 
+                placeholder="Tus apellidos"
+                class="w-full pl-11 pr-4 py-3 bg-white border border-slate-200 rounded-xl text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:border-[#0052A5] focus:ring-2 focus:ring-[#0052A5]/15 transition-all"
+              >
+            </div>
+          </div>
+        </div>
 
-      <div *ngIf="successMessage" class="mt-4 p-2 bg-green-100 text-green-700 text-center rounded">{{ successMessage }}</div>
-      <div *ngIf="errorMessage" class="mt-4 p-2 bg-red-100 text-red-700 text-center rounded">{{ errorMessage }}</div>
-    </form>
-  </div>
-</div>
+        <div>
+          <label class="block text-xs font-bold text-slate-800 mb-2">Correo electrónico institucional</label>
+          <div class="relative flex items-center">
+            <i class="fa-regular fa-envelope absolute left-4 text-slate-400 text-sm pointer-events-none"></i>
+            <input 
+              formControlName="uaa_email" 
+              type="email" 
+              placeholder="ejemplo@edu.uaa.mx"
+              class="w-full pl-11 pr-4 py-3 bg-white border border-slate-200 rounded-xl text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:border-[#0052A5] focus:ring-2 focus:ring-[#0052A5]/15 transition-all"
+            >
+          </div>
+          <span *ngIf="registerForm.get('uaa_email')?.hasError('nonInstitutionalEmail') && registerForm.get('uaa_email')?.touched" class="text-red-500 text-xs font-medium mt-1.5 block">
+            <i class="fa-solid fa-circle-exclamation mr-1"></i> Debe ser un correo &#64;edu.uaa.mx
+          </span>
+          <small class="text-[11px] text-slate-400 mt-1.5 block">
+            Utilizaremos este correo para notificaciones relacionadas con tus viajes.
+          </small>
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-slate-800 mb-2">Contraseña</label>
+          <div class="relative flex items-center">
+            <i class="fa-solid fa-lock absolute left-4 text-slate-400 text-sm pointer-events-none"></i>
+            <input 
+              formControlName="password" 
+              type="password" 
+              placeholder="Mínimo 6 caracteres"
+              class="w-full pl-11 pr-11 py-3 bg-white border border-slate-200 rounded-xl text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:border-[#0052A5] focus:ring-2 focus:ring-[#0052A5]/15 transition-all"
+            >
+            <i class="fa-regular fa-eye absolute right-4 text-slate-400 text-sm pointer-events-none"></i>
+          </div>
+        </div>
+
+        <div class="bg-[#F4F8FC] border border-blue-100/80 rounded-2xl p-4 flex items-start gap-4">
+          <div class="w-10 h-10 rounded-xl bg-white text-[#0052A5] shadow-sm flex items-center justify-center shrink-0 mt-0.5">
+            <i class="fa-solid fa-car text-base"></i>
+          </div>
+          <div>
+            <strong class="text-xs font-bold text-slate-900 block mb-1">¿También quieres conducir?</strong>
+            <p class="text-xs text-slate-500 leading-relaxed">
+              No necesitas decidirlo ahora. Podrás activar tu perfil de conductor y registrar tus vehículos desde tu perfil.
+            </p>
+          </div>
+        </div>
+
+        <button 
+          type="submit" 
+          [disabled]="registerForm.invalid" 
+          class="w-full bg-[#00468C] hover:bg-[#00356B] text-white font-semibold py-3.5 px-6 rounded-xl shadow-sm transition-all flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed text-sm"
+        >
+          <span>Crear mi cuenta</span>
+          <i class="fa-solid fa-arrow-right text-xs"></i>
+        </button>
+
+        <div *ngIf="successMessage" class="p-3.5 bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-medium text-center rounded-xl">
+          <i class="fa-solid fa-circle-check mr-1"></i> {{ successMessage }}
+        </div>
+        <div *ngIf="errorMessage" class="p-3.5 bg-red-50 border border-red-200 text-red-700 text-xs font-medium text-center rounded-xl">
+          <i class="fa-solid fa-triangle-exclamation mr-1"></i> {{ errorMessage }}
+        </div>
+
+      </form>
+
+      <p class="text-center text-xs text-slate-500 mt-8">
+        ¿Ya tienes una cuenta? 
+        <a href="/vehicle-register" class="font-bold text-[#0052A5] hover:underline ml-1">Ir a perfil de conductor</a>
+      </p>
+
+    </div>
+  </section>
+</main>
