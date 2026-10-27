@@ -21,6 +21,10 @@ app.get('/', (req, res) => {
   res.send('Servidor de UAAventon funcionando correctamente');
 });
 
-app.listen(port, () => {
-  console.log(`Servidor corriendo en http://localhost:${port}`);
-});
+if (process.env.NODE_ENV !== 'test') {
+  app.listen(port, () => {
+    console.log(`Servidor corriendo en http://localhost:${port}`);
+  });
+}
+
+export default app;
