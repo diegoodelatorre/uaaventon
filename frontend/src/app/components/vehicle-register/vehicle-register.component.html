@@ -1,0 +1,60 @@
+<div class="min-h-screen flex items-center justify-center bg-gray-100 p-4">
+  <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-2xl">
+    <h2 class="text-2xl font-bold text-center text-blue-900 mb-2">Conviértete en Conductor</h2>
+    <p class="text-center text-gray-500 mb-6">Registra tu vehículo y ayuda a otros compañeros de la UAA</p>
+   
+    <form [formGroup]="vehicleForm" (ngSubmit)="onSubmit()" class="space-y-4">
+     
+      <div>
+        <label class="block text-sm font-medium text-gray-700">Número de Licencia de Conducir</label>
+        <input formControlName="license_number" type="text" placeholder="Ej. A-1234567" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 border uppercase">
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label class="block text-sm font-medium text-gray-700">Marca</label>
+          <input formControlName="make" type="text" placeholder="Ej. Nissan" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 border">
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700">Modelo</label>
+          <input formControlName="model" type="text" placeholder="Ej. Versa" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 border">
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div>
+          <label class="block text-sm font-medium text-gray-700">Año</label>
+          <input formControlName="year" type="number" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 border">
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700">Color</label>
+          <input formControlName="color" type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 border">
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700">Placas</label>
+          <input formControlName="license_plate" type="text" placeholder="Ej. AAA-123-B" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 border uppercase">
+          <span *ngIf="vehicleForm.get('license_plate')?.hasError('pattern') && vehicleForm.get('license_plate')?.touched" class="text-red-500 text-xs">
+            Formato inválido. Use letras, números y guiones.
+          </span>
+        </div>
+      </div>
+
+      <div class="flex items-start mt-6 bg-gray-50 p-4 rounded border">
+        <div class="flex items-center h-5">
+          <input formControlName="terms_accepted" id="terms" type="checkbox" class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
+        </div>
+        <div class="ml-3 text-sm">
+          <label for="terms" class="font-medium text-gray-700">Declaración Jurada y Responsabilidad</label>
+          <p class="text-gray-500">Declaro que poseo licencia de conducir vigente y seguro automotriz válido. Me comprometo a conducir de forma segura y respetar a mis compañeros de la UAA.</p>
+        </div>
+      </div>
+
+      <button type="submit" [disabled]="vehicleForm.invalid" class="w-full mt-4 bg-green-600 text-white font-bold py-3 px-4 rounded hover:bg-green-700 disabled:opacity-50 transition-colors">
+        Registrar Vehículo y Comenzar a Manejar
+      </button>
+
+      <div *ngIf="successMessage" class="mt-4 p-3 bg-green-100 text-green-800 text-center rounded border border-green-200">{{ successMessage }}</div>
+      <div *ngIf="errorMessage" class="mt-4 p-3 bg-red-100 text-red-800 text-center rounded border border-red-200">{{ errorMessage }}</div>
+    </form>
+  </div>
+</div>
