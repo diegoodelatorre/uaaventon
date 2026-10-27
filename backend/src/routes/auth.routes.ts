@@ -7,8 +7,9 @@ const router = Router();
 router.post(
   '/register',
   [
-    body('nombre').notEmpty().withMessage('El nombre es obligatorio'),
-    body('email')
+    body('first_name').notEmpty().withMessage('El nombre es obligatorio'),
+    body('last_name').notEmpty().withMessage('El apellido es obligatorio'),
+    body('uaa_email')
       .isEmail().withMessage('Debe ser un correo válido')
       .custom((value) => {
         if (!value.endsWith('@edu.uaa.mx')) {

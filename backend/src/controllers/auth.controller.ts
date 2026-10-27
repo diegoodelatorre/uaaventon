@@ -11,23 +11,22 @@ export const registerUser = async (req: Request, res: Response): Promise<void> =
   }
 
   try {
-    const { nombre, apellido_paterno, apellido_materno, email, password } = req.body;
+    const { first_name, last_name, uaa_email, password } = req.body;
 
-    const existingUser = await UserModel.findByEmail(email);
+    const existingUser = await UserModel.findByEmail(uaa_email);
     if (existingUser) {
       res.status(400).json({ message: 'El usuario ya está registrado' });
       return;
     }
 
     const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(password, salt);
+    const password_hash = await bcrypt.hash(password, salt);
 
     await UserModel.create({
-      nombre,
-      apellido_paterno,
-      apellido_materno,
-      email,
-      password: hashedPassword
+      first_name,
+      last_name,
+      uaa_email,
+      password_hash
     });
 
     res.status(201).json({ message: 'Usuario registrado exitosamente' });
