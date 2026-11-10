@@ -1,60 +1,265 @@
-<div class="min-h-screen flex items-center justify-center bg-gray-100 p-4">
-  <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-2xl">
-    <h2 class="text-2xl font-bold text-center text-blue-900 mb-2">Conviértete en Conductor</h2>
-    <p class="text-center text-gray-500 mb-6">Registra tu vehículo y ayuda a otros compañeros de la UAA</p>
-   
-    <form [formGroup]="vehicleForm" (ngSubmit)="onSubmit()" class="space-y-4">
-     
+<div class="min-h-screen bg-[#F8FAFC] flex flex-col font-['Inter',sans-serif] pb-20 md:pb-12">
+
+  <header class="bg-white border-b border-slate-200/80 sticky top-0 z-30">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+      <a href="/register" class="flex items-center gap-2.5">
+        <div class="w-9 h-9 bg-[#00468C] text-white rounded-xl flex items-center justify-center text-base shadow-sm">
+          <i class="fa-solid fa-route"></i>
+        </div>
+        <span class="text-xl font-extrabold tracking-tight text-slate-900">
+          UAA<span class="text-[#0052A5]">ventón</span>
+        </span>
+      </a>
+
+      <nav class="hidden md:flex items-center gap-6 text-sm font-medium text-slate-600">
+        <a href="/register" class="hover:text-[#00468C] transition-colors">Registro</a>
+        <a href="/vehicle-register" class="text-[#00468C] font-semibold">Mis vehículos</a>
+        <a href="/publish-trip" class="hover:text-[#00468C] transition-colors">Publicar viaje</a>
+      </nav>
+
+      <div class="flex items-center gap-3">
+        <div class="flex items-center gap-2.5 pl-2 py-1 pr-3 rounded-full bg-slate-100/80 border border-slate-200/60">
+          <div class="w-8 h-8 rounded-full bg-[#00468C] text-white text-xs font-bold flex items-center justify-center">
+            UAA
+          </div>
+          <div class="hidden sm:block text-left leading-tight">
+            <strong class="block text-xs font-bold text-slate-800">Estudiante</strong>
+            <small class="text-[10px] text-slate-500">Perfil Conductor</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto w-full px-4 sm:px-6 pt-8">
+    
+    <div class="mb-6">
+      <span class="text-xs font-bold uppercase tracking-wider text-[#0052A5] block mb-1.5">
+        PERFIL DE CONDUCTOR
+      </span>
+      <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight mb-1">
+        Mis vehículos
+      </h1>
+      <p class="text-sm text-slate-500">
+        Registra el vehículo y licencia que utilizarás para compartir viajes en la UAA.
+      </p>
+    </div>
+
+    <div class="bg-[#F4F8FC] border border-blue-100 rounded-2xl p-4 sm:p-5 flex items-start sm:items-center gap-4 mb-8">
+      <div class="w-11 h-11 rounded-xl bg-white text-[#00468C] shadow-sm flex items-center justify-center text-lg shrink-0">
+        <i class="fa-solid fa-shield-halved"></i>
+      </div>
       <div>
-        <label class="block text-sm font-medium text-gray-700">Número de Licencia de Conducir</label>
-        <input formControlName="license_number" type="text" placeholder="Ej. A-1234567" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 border uppercase">
+        <strong class="text-sm font-bold text-slate-900 block mb-0.5">Tu seguridad también comienza aquí</strong>
+        <p class="text-xs text-slate-600 leading-relaxed">
+          Los pasajeros podrán consultar la marca, modelo, color y placas antes de abordar tu viaje.
+        </p>
       </div>
+    </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div>
-          <label class="block text-sm font-medium text-gray-700">Marca</label>
-          <input formControlName="make" type="text" placeholder="Ej. Nissan" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 border">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+      
+      <section class="lg:col-span-2 bg-white rounded-2xl border border-slate-200/80 shadow-sm p-6 sm:p-8">
+        
+        <div class="flex items-center gap-3.5 pb-6 mb-6 border-b border-slate-100">
+          <div class="w-11 h-11 rounded-xl bg-blue-50 text-[#00468C] flex items-center justify-center text-lg">
+            <i class="fa-solid fa-car-side"></i>
+          </div>
+          <div>
+            <span class="text-[11px] font-bold uppercase tracking-wider text-[#0052A5] block">NUEVO VEHÍCULO</span>
+            <h2 class="text-lg font-extrabold text-slate-900">Registra tu automóvil</h2>
+          </div>
         </div>
-        <div>
-          <label class="block text-sm font-medium text-gray-700">Modelo</label>
-          <input formControlName="model" type="text" placeholder="Ej. Versa" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 border">
+
+        <form [formGroup]="vehicleForm" (ngSubmit)="onSubmit()" class="space-y-5">
+          
+          <div>
+            <label class="block text-xs font-bold text-slate-800 mb-2">Número de Licencia de Conducir</label>
+            <div class="relative flex items-center">
+              <i class="fa-regular fa-id-card absolute left-4 text-slate-400 text-sm pointer-events-none"></i>
+              <input 
+                formControlName="license_number" 
+                type="text" 
+                placeholder="Ej. A-1234567" 
+                class="w-full pl-11 pr-4 py-3 bg-white border border-slate-200 rounded-xl text-sm text-slate-800 placeholder-slate-400 uppercase focus:outline-none focus:border-[#0052A5] focus:ring-2 focus:ring-[#0052A5]/15 transition-all"
+              >
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-bold text-slate-800 mb-2">Marca</label>
+              <div class="relative flex items-center">
+                <i class="fa-solid fa-tag absolute left-4 text-slate-400 text-sm pointer-events-none"></i>
+                <input 
+                  formControlName="make" 
+                  type="text" 
+                  placeholder="Ej. Nissan" 
+                  class="w-full pl-11 pr-4 py-3 bg-white border border-slate-200 rounded-xl text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:border-[#0052A5] focus:ring-2 focus:ring-[#0052A5]/15 transition-all"
+                >
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-xs font-bold text-slate-800 mb-2">Modelo</label>
+              <div class="relative flex items-center">
+                <i class="fa-solid fa-car absolute left-4 text-slate-400 text-sm pointer-events-none"></i>
+                <input 
+                  formControlName="model" 
+                  type="text" 
+                  placeholder="Ej. Versa" 
+                  class="w-full pl-11 pr-4 py-3 bg-white border border-slate-200 rounded-xl text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:border-[#0052A5] focus:ring-2 focus:ring-[#0052A5]/15 transition-all"
+                >
+              </div>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div>
+              <label class="block text-xs font-bold text-slate-800 mb-2">Año</label>
+              <div class="relative flex items-center">
+                <i class="fa-regular fa-calendar absolute left-4 text-slate-400 text-sm pointer-events-none"></i>
+                <input 
+                  formControlName="year" 
+                  type="number" 
+                  placeholder="2024"
+                  class="w-full pl-11 pr-4 py-3 bg-white border border-slate-200 rounded-xl text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:border-[#0052A5] focus:ring-2 focus:ring-[#0052A5]/15 transition-all"
+                >
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-xs font-bold text-slate-800 mb-2">Color</label>
+              <div class="relative flex items-center">
+                <i class="fa-solid fa-palette absolute left-4 text-slate-400 text-sm pointer-events-none"></i>
+                <input 
+                  formControlName="color" 
+                  type="text" 
+                  placeholder="Ej. Gris"
+                  class="w-full pl-11 pr-4 py-3 bg-white border border-slate-200 rounded-xl text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:border-[#0052A5] focus:ring-2 focus:ring-[#0052A5]/15 transition-all"
+                >
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-xs font-bold text-slate-800 mb-2">Placas</label>
+              <div class="relative flex items-center">
+                <i class="fa-solid fa-hashtag absolute left-4 text-slate-400 text-sm pointer-events-none"></i>
+                <input 
+                  formControlName="license_plate" 
+                  type="text" 
+                  placeholder="AAA-123-B" 
+                  class="w-full pl-11 pr-4 py-3 bg-white border border-slate-200 rounded-xl text-sm text-slate-800 placeholder-slate-400 uppercase focus:outline-none focus:border-[#0052A5] focus:ring-2 focus:ring-[#0052A5]/15 transition-all"
+                >
+              </div>
+              <span *ngIf="vehicleForm.get('license_plate')?.hasError('pattern') && vehicleForm.get('license_plate')?.touched" class="text-red-500 text-[11px] font-medium mt-1 block">
+                Formato inválido. Use letras, números y guiones.
+              </span>
+            </div>
+          </div>
+
+          <div class="bg-[#F4F8FC] border border-blue-100/80 rounded-2xl p-4 flex items-start gap-3.5 mt-2">
+            <div class="flex items-center h-5 mt-0.5">
+              <input 
+                formControlName="terms_accepted" 
+                id="terms" 
+                type="checkbox" 
+                class="w-4 h-4 text-[#00468C] border-slate-300 rounded focus:ring-[#00468C] cursor-pointer"
+              >
+            </div>
+            <div class="text-xs">
+              <label for="terms" class="font-bold text-slate-900 cursor-pointer block mb-1">
+                Declaración Jurada y Responsabilidad
+              </label>
+              <p class="text-slate-500 leading-relaxed">
+                Declaro que poseo licencia de conducir vigente y seguro automotriz válido. Me comprometo a conducir de forma segura y respetar a mis compañeros de la UAA.
+              </p>
+            </div>
+          </div>
+
+          <button 
+            type="submit" 
+            [disabled]="vehicleForm.invalid" 
+            class="w-full bg-[#00468C] hover:bg-[#00356B] text-white font-semibold py-3.5 px-6 rounded-xl shadow-sm transition-all flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed text-sm"
+          >
+            <i class="fa-solid fa-plus text-xs"></i>
+            <span>Registrar Vehículo y Comenzar a Manejar</span>
+          </button>
+
+          <div *ngIf="successMessage" class="p-3.5 bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-medium text-center rounded-xl">
+            <i class="fa-solid fa-circle-check mr-1"></i> {{ successMessage }}
+          </div>
+          <div *ngIf="errorMessage" class="p-3.5 bg-red-50 border border-red-200 text-red-700 text-xs font-medium text-center rounded-xl">
+            <i class="fa-solid fa-triangle-exclamation mr-1"></i> {{ errorMessage }}
+          </div>
+
+        </form>
+      </section>
+
+      <aside class="bg-[#00468C] text-white rounded-2xl p-6 sm:p-7 shadow-sm relative overflow-hidden">
+        <div class="absolute -top-12 -right-12 w-36 h-36 rounded-full border border-white/10 pointer-events-none"></div>
+        
+        <div class="w-10 h-10 rounded-xl bg-white/10 text-blue-200 font-extrabold text-sm flex items-center justify-center mb-4">
+          01
         </div>
+
+        <span class="text-[11px] font-bold uppercase tracking-widest text-blue-200 block mb-2">
+          ANTES DE PUBLICAR
+        </span>
+
+        <h3 class="text-xl font-extrabold leading-snug mb-3">
+          Necesitas al menos un vehículo registrado.
+        </h3>
+
+        <p class="text-xs text-blue-100/90 leading-relaxed mb-6">
+          Cuando publiques un viaje se vinculará automáticamente tu automóvil habilitado en esta sección.
+        </p>
+
+        <div class="space-y-3 mb-8 text-xs font-medium text-blue-50">
+          <div class="flex items-center gap-3">
+            <div class="w-5 h-5 rounded-full bg-white/15 flex items-center justify-center text-[10px] text-blue-200">
+              <i class="fa-solid fa-check"></i>
+            </div>
+            <span>Licencia de conducir vigente</span>
+          </div>
+          <div class="flex items-center gap-3">
+            <div class="w-5 h-5 rounded-full bg-white/15 flex items-center justify-center text-[10px] text-blue-200">
+              <i class="fa-solid fa-check"></i>
+            </div>
+            <span>Marca, modelo y año</span>
+          </div>
+          <div class="flex items-center gap-3">
+            <div class="w-5 h-5 rounded-full bg-white/15 flex items-center justify-center text-[10px] text-blue-200">
+              <i class="fa-solid fa-check"></i>
+            </div>
+            <span>Color e identificación de placas</span>
+          </div>
+        </div>
+
+        <a href="/publish-trip" class="w-full bg-white text-[#00468C] hover:bg-blue-50 font-bold text-xs py-3 px-4 rounded-xl flex items-center justify-center gap-2 transition-colors">
+          <span>Ir a publicar viaje</span>
+          <i class="fa-solid fa-arrow-right text-[10px]"></i>
+        </a>
+      </aside>
+
+    </div>
+  </main>
+
+  <nav class="md:hidden fixed bottom-0 inset-x-0 bg-white border-t border-slate-200 flex items-center justify-around h-16 z-40 px-2">
+    <a href="/register" class="flex flex-col items-center justify-center text-slate-400 text-[11px] font-medium gap-1">
+      <i class="fa-regular fa-user text-base"></i>
+      <span>Registro</span>
+    </a>
+    <a href="/publish-trip" class="flex flex-col items-center justify-center text-slate-500 text-[11px] font-medium gap-1 -mt-5">
+      <div class="w-11 h-11 rounded-full bg-[#00468C] text-white flex items-center justify-center shadow-md">
+        <i class="fa-solid fa-plus text-base"></i>
       </div>
+      <span>Publicar</span>
+    </a>
+    <a href="/vehicle-register" class="flex flex-col items-center justify-center text-[#00468C] text-[11px] font-bold gap-1">
+      <i class="fa-solid fa-car text-base"></i>
+      <span>Vehículo</span>
+    </a>
+  </nav>
 
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div>
-          <label class="block text-sm font-medium text-gray-700">Año</label>
-          <input formControlName="year" type="number" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 border">
-        </div>
-        <div>
-          <label class="block text-sm font-medium text-gray-700">Color</label>
-          <input formControlName="color" type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 border">
-        </div>
-        <div>
-          <label class="block text-sm font-medium text-gray-700">Placas</label>
-          <input formControlName="license_plate" type="text" placeholder="Ej. AAA-123-B" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 border uppercase">
-          <span *ngIf="vehicleForm.get('license_plate')?.hasError('pattern') && vehicleForm.get('license_plate')?.touched" class="text-red-500 text-xs">
-            Formato inválido. Use letras, números y guiones.
-          </span>
-        </div>
-      </div>
-
-      <div class="flex items-start mt-6 bg-gray-50 p-4 rounded border">
-        <div class="flex items-center h-5">
-          <input formControlName="terms_accepted" id="terms" type="checkbox" class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
-        </div>
-        <div class="ml-3 text-sm">
-          <label for="terms" class="font-medium text-gray-700">Declaración Jurada y Responsabilidad</label>
-          <p class="text-gray-500">Declaro que poseo licencia de conducir vigente y seguro automotriz válido. Me comprometo a conducir de forma segura y respetar a mis compañeros de la UAA.</p>
-        </div>
-      </div>
-
-      <button type="submit" [disabled]="vehicleForm.invalid" class="w-full mt-4 bg-green-600 text-white font-bold py-3 px-4 rounded hover:bg-green-700 disabled:opacity-50 transition-colors">
-        Registrar Vehículo y Comenzar a Manejar
-      </button>
-
-      <div *ngIf="successMessage" class="mt-4 p-3 bg-green-100 text-green-800 text-center rounded border border-green-200">{{ successMessage }}</div>
-      <div *ngIf="errorMessage" class="mt-4 p-3 bg-red-100 text-red-800 text-center rounded border border-red-200">{{ errorMessage }}</div>
-    </form>
-  </div>
 </div>

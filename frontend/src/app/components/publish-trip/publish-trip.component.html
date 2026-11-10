@@ -1,46 +1,280 @@
-<div class="min-h-screen flex items-center justify-center bg-gray-100 p-4">
-  <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-2xl">
-    <h2 class="text-2xl font-bold text-center text-blue-900 mb-2">Publicar un Viaje</h2>
-    <p class="text-center text-gray-500 mb-6">Ofrece asientos disponibles y ayuda a otros estudiantes.</p>
-    
-    <form [formGroup]="tripForm" (ngSubmit)="onSubmit()" class="space-y-4">
-      
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div>
-          <label class="block text-sm font-medium text-gray-700">Punto de Origen</label>
-          <input formControlName="origin_point" type="text" placeholder="Ej. Altaria" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 border">
-        </div>
-        <div>
-          <label class="block text-sm font-medium text-gray-700">Punto de Destino</label>
-          <input formControlName="destination_point" type="text" placeholder="Ej. UAA - Campus Sur" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 border">
-        </div>
-      </div>
+<div class="min-h-screen bg-[#F8FAFC] flex flex-col font-['Inter',sans-serif] pb-20 md:pb-12">
 
-      <div>
-        <label class="block text-sm font-medium text-gray-700">Fecha y Hora de Salida</label>
-        <input formControlName="departure_datetime" type="datetime-local" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 border">
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div>
-          <label class="block text-sm font-medium text-gray-700">Asientos Disponibles</label>
-          <input formControlName="total_seats" type="number" min="1" max="8" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 border">
+  <header class="bg-white border-b border-slate-200/80 sticky top-0 z-30">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+      <a href="/register" class="flex items-center gap-2.5">
+        <div class="w-9 h-9 bg-[#00468C] text-white rounded-xl flex items-center justify-center text-base shadow-sm">
+          <i class="fa-solid fa-route"></i>
         </div>
-        <div>
-          <label class="block text-sm font-medium text-gray-700">Precio por Asiento (MXN)</label>
-          <div class="relative mt-1">
-            <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-500">$</span>
-            <input formControlName="price_per_seat" type="number" step="0.50" min="0" placeholder="0.00" class="block w-full pl-7 rounded-md border-gray-300 shadow-sm p-2 border">
+        <span class="text-xl font-extrabold tracking-tight text-slate-900">
+          UAA<span class="text-[#0052A5]">ventón</span>
+        </span>
+      </a>
+
+      <nav class="hidden md:flex items-center gap-6 text-sm font-medium text-slate-600">
+        <a href="/register" class="hover:text-[#00468C] transition-colors">Registro</a>
+        <a href="/vehicle-register" class="hover:text-[#00468C] transition-colors">Mis vehículos</a>
+        <a href="/publish-trip" class="text-[#00468C] font-semibold">Publicar viaje</a>
+      </nav>
+
+      <div class="flex items-center gap-3">
+        <div class="flex items-center gap-2.5 pl-2 py-1 pr-3 rounded-full bg-slate-100/80 border border-slate-200/60">
+          <div class="w-8 h-8 rounded-full bg-[#00468C] text-white text-xs font-bold flex items-center justify-center">
+            UAA
+          </div>
+          <div class="hidden sm:block text-left leading-tight">
+            <strong class="block text-xs font-bold text-slate-800">Conductor</strong>
+            <small class="text-[10px] text-slate-500">Activo</small>
           </div>
         </div>
       </div>
+    </div>
+  </header>
 
-      <button type="submit" [disabled]="tripForm.invalid" class="w-full mt-6 bg-blue-600 text-white font-bold py-3 px-4 rounded hover:bg-blue-700 disabled:opacity-50 transition-colors">
-        Publicar Viaje
-      </button>
+  <main class="max-w-5xl mx-auto w-full px-4 sm:px-6 pt-8">
+    
+    <div class="mb-6">
+      <span class="text-xs font-bold uppercase tracking-wider text-[#0052A5] block mb-1.5">
+        COMPARTE TU CAMINO
+      </span>
+      <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight mb-1">
+        Publicar un viaje
+      </h1>
+      <p class="text-sm text-slate-500">
+        Cuéntanos a dónde vas y encuentra estudiantes que puedan compartir el trayecto contigo.
+      </p>
+    </div>
 
-      <div *ngIf="successMessage" class="mt-4 p-3 bg-green-100 text-green-800 text-center rounded border border-green-200">{{ successMessage }}</div>
-      <div *ngIf="errorMessage" class="mt-4 p-3 bg-red-100 text-red-800 text-center rounded border border-red-200">{{ errorMessage }}</div>
+    <div class="bg-white border border-slate-200/80 rounded-2xl p-4 sm:px-6 mb-8 shadow-sm flex items-center justify-between overflow-x-auto gap-4">
+      <div class="flex items-center gap-3 shrink-0">
+        <span class="w-8 h-8 rounded-xl bg-[#00468C] text-white text-xs font-extrabold flex items-center justify-center">1</span>
+        <div class="leading-tight">
+          <strong class="block text-xs font-bold text-slate-900">Ruta</strong>
+          <small class="text-[11px] text-slate-400">Origen y destino</small>
+        </div>
+      </div>
+
+      <div class="h-px bg-slate-200 flex-1 min-w-[20px]"></div>
+
+      <div class="flex items-center gap-3 shrink-0">
+        <span class="w-8 h-8 rounded-xl bg-blue-50 text-[#00468C] text-xs font-extrabold flex items-center justify-center">2</span>
+        <div class="leading-tight">
+          <strong class="block text-xs font-bold text-slate-900">Horario</strong>
+          <small class="text-[11px] text-slate-400">Fecha y salida</small>
+        </div>
+      </div>
+
+      <div class="h-px bg-slate-200 flex-1 min-w-[20px]"></div>
+
+      <div class="flex items-center gap-3 shrink-0">
+        <span class="w-8 h-8 rounded-xl bg-blue-50 text-[#00468C] text-xs font-extrabold flex items-center justify-center">3</span>
+        <div class="leading-tight">
+          <strong class="block text-xs font-bold text-slate-900">Detalles</strong>
+          <small class="text-[11px] text-slate-400">Lugares y costo</small>
+        </div>
+      </div>
+    </div>
+
+    <form [formGroup]="tripForm" (ngSubmit)="onSubmit()" class="space-y-6">
+      
+      <section class="bg-white rounded-2xl border border-slate-200/80 shadow-sm p-6 sm:p-8">
+        <div class="flex items-center gap-3.5 pb-6 mb-6 border-b border-slate-100">
+          <div class="w-10 h-10 rounded-xl bg-blue-50 text-[#00468C] font-extrabold text-sm flex items-center justify-center">
+            01
+          </div>
+          <div>
+            <span class="text-[11px] font-bold uppercase tracking-wider text-[#0052A5] block">DEFINE TU CAMINO</span>
+            <h2 class="text-lg font-extrabold text-slate-900">¿A dónde vas?</h2>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-5 gap-6 items-center">
+          <div class="lg:col-span-3 space-y-4">
+            <div>
+              <label class="block text-xs font-bold text-slate-800 mb-2">Punto de Salida (Origen)</label>
+              <div class="relative flex items-center">
+                <i class="fa-regular fa-circle-dot absolute left-4 text-[#0052A5] text-sm pointer-events-none"></i>
+                <input 
+                  formControlName="origin_point" 
+                  type="text" 
+                  placeholder="Ej. Acceso Norte UAA / Altaria" 
+                  class="w-full pl-11 pr-4 py-3 bg-white border border-slate-200 rounded-xl text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:border-[#0052A5] focus:ring-2 focus:ring-[#0052A5]/15 transition-all"
+                >
+              </div>
+            </div>
+
+            <div class="flex items-center gap-2 pl-5 py-0.5">
+              <div class="w-0.5 h-5 bg-blue-200"></div>
+              <span class="text-[11px] text-slate-400 font-medium">Trayecto directo</span>
+            </div>
+
+            <div>
+              <label class="block text-xs font-bold text-slate-800 mb-2">Destino Final</label>
+              <div class="relative flex items-center">
+                <i class="fa-solid fa-location-dot absolute left-4 text-emerald-600 text-sm pointer-events-none"></i>
+                <input 
+                  formControlName="destination_point" 
+                  type="text" 
+                  placeholder="Ej. UAA Campus Sur / Rincón de Romos" 
+                  class="w-full pl-11 pr-4 py-3 bg-white border border-slate-200 rounded-xl text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:border-[#0052A5] focus:ring-2 focus:ring-[#0052A5]/15 transition-all"
+                >
+              </div>
+            </div>
+          </div>
+
+          <div class="lg:col-span-2 bg-[#F4F8FC] border border-blue-100 rounded-2xl p-5 flex flex-col justify-between h-full">
+            <div class="flex items-center gap-2 text-xs font-bold text-[#00468C] mb-4">
+              <i class="fa-solid fa-route"></i>
+              <span>Vista previa de la ruta</span>
+            </div>
+
+            <div class="space-y-3 my-auto">
+              <div class="bg-white p-3 rounded-xl border border-slate-200/70 flex items-center gap-3 shadow-2xs">
+                <span class="w-8 h-8 rounded-lg bg-blue-50 text-[#00468C] flex items-center justify-center text-xs shrink-0">
+                  <i class="fa-solid fa-graduation-cap"></i>
+                </span>
+                <div class="truncate">
+                  <small class="text-[10px] font-bold uppercase text-slate-400 block">ORIGEN</small>
+                  <strong class="text-xs font-bold text-slate-800 truncate block">
+                    {{ tripForm.get('origin_point')?.value || 'Punto de partida' }}
+                  </strong>
+                </div>
+              </div>
+
+              <div class="bg-white p-3 rounded-xl border border-slate-200/70 flex items-center gap-3 shadow-2xs">
+                <span class="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center text-xs shrink-0">
+                  <i class="fa-solid fa-location-dot"></i>
+                </span>
+                <div class="truncate">
+                  <small class="text-[10px] font-bold uppercase text-slate-400 block">DESTINO</small>
+                  <strong class="text-xs font-bold text-slate-800 truncate block">
+                    {{ tripForm.get('destination_point')?.value || 'Tu destino final' }}
+                  </strong>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="bg-white rounded-2xl border border-slate-200/80 shadow-sm p-6 sm:p-8">
+        <div class="flex items-center gap-3.5 pb-6 mb-6 border-b border-slate-100">
+          <div class="w-10 h-10 rounded-xl bg-blue-50 text-[#00468C] font-extrabold text-sm flex items-center justify-center">
+            02
+          </div>
+          <div>
+            <span class="text-[11px] font-bold uppercase tracking-wider text-[#0052A5] block">CONFIGURA TU VIAJE</span>
+            <h2 class="text-lg font-extrabold text-slate-900">Horario, lugares y aportación</h2>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+          
+          <div class="bg-[#F8FAFC] border border-slate-200/80 rounded-2xl p-4">
+            <div class="w-9 h-9 rounded-xl bg-white text-[#00468C] shadow-2xs flex items-center justify-center text-sm mb-3">
+              <i class="fa-regular fa-calendar"></i>
+            </div>
+            <span class="text-[10px] font-bold uppercase tracking-wider text-[#0052A5] block mb-1">SALIDA PROGRAMADA</span>
+            <label class="block text-xs font-bold text-slate-800 mb-2.5">Fecha y Hora de Salida</label>
+            <input 
+              formControlName="departure_datetime" 
+              type="datetime-local" 
+              class="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-xl text-xs text-slate-800 focus:outline-none focus:border-[#0052A5] focus:ring-2 focus:ring-[#0052A5]/15 transition-all"
+            >
+          </div>
+
+          <div class="bg-[#F8FAFC] border border-slate-200/80 rounded-2xl p-4">
+            <div class="w-9 h-9 rounded-xl bg-white text-[#00468C] shadow-2xs flex items-center justify-center text-sm mb-3">
+              <i class="fa-solid fa-user-group"></i>
+            </div>
+            <span class="text-[10px] font-bold uppercase tracking-wider text-[#0052A5] block mb-1">CAPACIDAD</span>
+            <label class="block text-xs font-bold text-slate-800 mb-2.5">Asientos Disponibles (1-8)</label>
+            <div class="relative flex items-center">
+              <i class="fa-solid fa-chair absolute left-3.5 text-slate-400 text-xs pointer-events-none"></i>
+              <input 
+                formControlName="total_seats" 
+                type="number" 
+                min="1" 
+                max="8" 
+                placeholder="Ej. 3"
+                class="w-full pl-9 pr-4 py-2.5 bg-white border border-slate-200 rounded-xl text-sm font-bold text-slate-800 focus:outline-none focus:border-[#0052A5] focus:ring-2 focus:ring-[#0052A5]/15 transition-all"
+              >
+            </div>
+          </div>
+
+          <div class="bg-[#F8FAFC] border border-slate-200/80 rounded-2xl p-4">
+            <div class="w-9 h-9 rounded-xl bg-white text-[#00468C] shadow-2xs flex items-center justify-center text-sm mb-3">
+              <i class="fa-solid fa-wallet"></i>
+            </div>
+            <span class="text-[10px] font-bold uppercase tracking-wider text-[#0052A5] block mb-1">COSTO POR PERSONA</span>
+            <label class="block text-xs font-bold text-slate-800 mb-2.5">Aportación por Asiento</label>
+            <div class="relative flex items-center">
+              <span class="absolute left-3.5 text-slate-500 font-bold text-sm pointer-events-none">$</span>
+              <input 
+                formControlName="price_per_seat" 
+                type="number" 
+                step="0.50" 
+                min="0" 
+                placeholder="35.00" 
+                class="w-full pl-8 pr-12 py-2.5 bg-white border border-slate-200 rounded-xl text-sm font-bold text-slate-800 focus:outline-none focus:border-[#0052A5] focus:ring-2 focus:ring-[#0052A5]/15 transition-all"
+              >
+              <small class="absolute right-3.5 text-[11px] font-bold text-slate-400 pointer-events-none">MXN</small>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="mt-6 bg-[#F4F8FC] border border-blue-100 rounded-2xl p-4 flex items-start gap-3.5">
+          <i class="fa-solid fa-circle-info text-[#0052A5] text-base mt-0.5"></i>
+          <div class="text-xs">
+            <strong class="font-bold text-slate-900 block mb-0.5">La idea es compartir gastos.</strong>
+            <p class="text-slate-500 leading-relaxed">
+              UAAventón busca hacer más accesible el transporte entre estudiantes de la universidad, no funcionar como un servicio de taxi.
+            </p>
+          </div>
+        </div>
+
+        <div class="mt-6 pt-6 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-end gap-3">
+          <a href="/vehicle-register" class="w-full sm:w-auto text-center text-xs font-bold text-slate-500 hover:text-slate-800 py-3 px-5">
+            Administrar vehículos
+          </a>
+          <button 
+            type="submit" 
+            [disabled]="tripForm.invalid" 
+            class="w-full sm:w-auto bg-[#00468C] hover:bg-[#00356B] text-white font-semibold py-3.5 px-8 rounded-xl shadow-sm transition-all flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed text-sm"
+          >
+            <i class="fa-solid fa-paper-plane text-xs"></i>
+            <span>Publicar Viaje</span>
+          </button>
+        </div>
+
+        <div *ngIf="successMessage" class="mt-4 p-3.5 bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-medium text-center rounded-xl">
+          <i class="fa-solid fa-circle-check mr-1"></i> {{ successMessage }}
+        </div>
+        <div *ngIf="errorMessage" class="mt-4 p-3.5 bg-red-50 border border-red-200 text-red-700 text-xs font-medium text-center rounded-xl">
+          <i class="fa-solid fa-triangle-exclamation mr-1"></i> {{ errorMessage }}
+        </div>
+
+      </section>
+
     </form>
-  </div>
+  </main>
+
+  <nav class="md:hidden fixed bottom-0 inset-x-0 bg-white border-t border-slate-200 flex items-center justify-around h-16 z-40 px-2">
+    <a href="/register" class="flex flex-col items-center justify-center text-slate-400 text-[11px] font-medium gap-1">
+      <i class="fa-regular fa-user text-base"></i>
+      <span>Registro</span>
+    </a>
+    <a href="/publish-trip" class="flex flex-col items-center justify-center text-[#00468C] text-[11px] font-bold gap-1 -mt-5">
+      <div class="w-11 h-11 rounded-full bg-[#00468C] text-white flex items-center justify-center shadow-md">
+        <i class="fa-solid fa-plus text-base"></i>
+      </div>
+      <span>Publicar</span>
+    </a>
+    <a href="/vehicle-register" class="flex flex-col items-center justify-center text-slate-400 text-[11px] font-medium gap-1">
+      <i class="fa-solid fa-car text-base"></i>
+      <span>Vehículo</span>
+    </a>
+  </nav>
+
 </div>
