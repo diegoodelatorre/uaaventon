@@ -1,30 +1,23 @@
-import express from 'express';
-import cors from 'cors';
-import dotenv from 'dotenv';
-import authRoutes from './routes/auth.routes.js';
-import vehicleRoutes from './routes/vehicle.routes.js';
-import tripRoutes from './routes/trip.routes.js';
+import dotenv from "dotenv";
+import { Server } from "./server.js";
+import { AppRoutes } from "./routes/index.js";
 
 dotenv.config();
 
-const app = express();
-const port = process.env.PORT || 3000;
+const port = Number(process.env.PORT) || 3000;
+const server = new Server({ port, routes: AppRoutes.router });
 
-app.use(cors());
-app.use(express.json());
-
-app.use('/api/auth', authRoutes);
-app.use('/api/vehicles', vehicleRoutes);
-app.use('/api/trips', tripRoutes);
-
-app.get('/', (req, res) => {
-  res.send('Servidor de UAAventon funcionando correctamente');
-});
-
-if (process.env.NODE_ENV !== 'test') {
-  app.listen(port, () => {
-    console.log(`Servidor corriendo en http://localhost:${port}`);
-  });
+async function main() {
+  try {
+    if (process.env.NODE_ENV !== "test") {
+      server.start();
+    }
+  } catch (e) {
+    console.log(e);
+    process.exit(1);
+  }
 }
 
-export default app;
+main();
+
+export default server.app;
