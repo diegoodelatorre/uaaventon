@@ -4,7 +4,7 @@
     <div class="absolute -top-24 -right-24 w-96 h-96 rounded-full border border-white/10 pointer-events-none"></div>
     <div class="absolute -bottom-32 -left-32 w-[500px] h-[500px] rounded-full border border-white/10 pointer-events-none"></div>
 
-    <a href="/register" class="flex items-center gap-3 z-10">
+    <a routerLink="/register" class="flex items-center gap-3 z-10">
       <div class="w-10 h-10 bg-white text-[#00468C] rounded-xl flex items-center justify-center text-lg shadow-sm">
         <i class="fa-solid fa-route"></i>
       </div>
@@ -57,7 +57,7 @@
     <div class="w-full max-w-lg">
       
       <div class="lg:hidden mb-8">
-        <a href="/register" class="inline-flex items-center gap-3">
+        <a routerLink="/register" class="inline-flex items-center gap-3">
           <div class="w-10 h-10 bg-[#00468C] text-white rounded-xl flex items-center justify-center text-lg shadow-sm">
             <i class="fa-solid fa-route"></i>
           </div>
@@ -120,9 +120,11 @@
               class="w-full pl-11 pr-4 py-3 bg-white border border-slate-200 rounded-xl text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:border-[#0052A5] focus:ring-2 focus:ring-[#0052A5]/15 transition-all"
             >
           </div>
-          <span *ngIf="registerForm.get('uaa_email')?.hasError('nonInstitutionalEmail') && registerForm.get('uaa_email')?.touched" class="text-red-500 text-xs font-medium mt-1.5 block">
-            <i class="fa-solid fa-circle-exclamation mr-1"></i> Debe ser un correo &#64;edu.uaa.mx
-          </span>
+          @if (registerForm.get('uaa_email')?.hasError('nonInstitutionalEmail') && registerForm.get('uaa_email')?.touched) {
+            <span class="text-red-500 text-xs font-medium mt-1.5 block">
+              <i class="fa-solid fa-circle-exclamation mr-1"></i> Debe ser un correo &#64;edu.uaa.mx
+            </span>
+          }
           <small class="text-[11px] text-slate-400 mt-1.5 block">
             Utilizaremos este correo para notificaciones relacionadas con tus viajes.
           </small>
@@ -135,7 +137,7 @@
             <input 
               formControlName="password" 
               type="password" 
-              placeholder="Mínimo 6 caracteres"
+              placeholder="Mínimo 8 caracteres"
               class="w-full pl-11 pr-11 py-3 bg-white border border-slate-200 rounded-xl text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:border-[#0052A5] focus:ring-2 focus:ring-[#0052A5]/15 transition-all"
             >
             <i class="fa-regular fa-eye absolute right-4 text-slate-400 text-sm pointer-events-none"></i>
@@ -163,18 +165,22 @@
           <i class="fa-solid fa-arrow-right text-xs"></i>
         </button>
 
-        <div *ngIf="successMessage" class="p-3.5 bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-medium text-center rounded-xl">
-          <i class="fa-solid fa-circle-check mr-1"></i> {{ successMessage }}
-        </div>
-        <div *ngIf="errorMessage" class="p-3.5 bg-red-50 border border-red-200 text-red-700 text-xs font-medium text-center rounded-xl">
-          <i class="fa-solid fa-triangle-exclamation mr-1"></i> {{ errorMessage }}
-        </div>
+        @if (successMessage) {
+          <div class="p-3.5 bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-medium text-center rounded-xl">
+            <i class="fa-solid fa-circle-check mr-1"></i> {{ successMessage }}
+          </div>
+        }
+        @if (errorMessage) {
+          <div class="p-3.5 bg-red-50 border border-red-200 text-red-700 text-xs font-medium text-center rounded-xl">
+            <i class="fa-solid fa-triangle-exclamation mr-1"></i> {{ errorMessage }}
+          </div>
+        }
 
       </form>
 
       <p class="text-center text-xs text-slate-500 mt-8">
         ¿Ya tienes una cuenta? 
-        <a href="/vehicle-register" class="font-bold text-[#0052A5] hover:underline ml-1">Ir a perfil de conductor</a>
+        <a routerLink="/vehicle-register" class="font-bold text-[#0052A5] hover:underline ml-1">Ir a perfil de conductor</a>
       </p>
 
     </div>

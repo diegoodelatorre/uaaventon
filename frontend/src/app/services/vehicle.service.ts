@@ -1,16 +1,18 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { VehicleRequest } from '../models/vehicle.model';
+import { ApiResponse } from '../models/api-response.model';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class VehicleService {
-  private apiUrl = 'http://localhost:3000/api/vehicles';
+  private readonly http = inject(HttpClient);
+  private readonly apiUrl = `${environment.apiUrl}/vehicles`;
 
-  constructor(private http: HttpClient) {}
-
-  registerVehicle(vehicleData: any): Observable<any> {
-    return this.http.post(this.apiUrl, vehicleData);
+  registerVehicle(vehicleData: VehicleRequest): Observable<ApiResponse> {
+    return this.http.post<ApiResponse>(this.apiUrl, vehicleData);
   }
 }
