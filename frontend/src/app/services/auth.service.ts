@@ -1,16 +1,18 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { RegisterRequest } from '../models/user.model';
+import { ApiResponse } from '../models/api-response.model';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:3000/api/auth';
+  private readonly http = inject(HttpClient);
+  private readonly apiUrl = `${environment.apiUrl}/auth`;
 
-  constructor(private http: HttpClient) {}
-
-  register(userData: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/register`, userData);
+  register(userData: RegisterRequest): Observable<ApiResponse> {
+    return this.http.post<ApiResponse>(`${this.apiUrl}/register`, userData);
   }
 }

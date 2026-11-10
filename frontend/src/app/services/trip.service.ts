@@ -1,16 +1,18 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { TripRequest } from '../models/trip.model';
+import { ApiResponse } from '../models/api-response.model';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TripService {
-  private apiUrl = 'http://localhost:3000/api/trips';
+  private readonly http = inject(HttpClient);
+  private readonly apiUrl = `${environment.apiUrl}/trips`;
 
-  constructor(private http: HttpClient) {}
-
-  publishTrip(tripData: any): Observable<any> {
-    return this.http.post(this.apiUrl, tripData);
+  publishTrip(tripData: TripRequest): Observable<ApiResponse> {
+    return this.http.post<ApiResponse>(this.apiUrl, tripData);
   }
 }
