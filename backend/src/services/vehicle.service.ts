@@ -1,47 +1,35 @@
-import db from "../conf/db.js";
-import { Vehicle, type IVehicle } from "../models/index.js";
+import sequelize from "../conf/db.js";
+import { Vehicle, User, type IVehicle } from "../models/index.js";
 
 export class VehicleService {
   public async registerVehicleAndUpgradeUser(
-    vehicleData: IVehicle,
+    vehicleData: IVehicle
   ): Promise<boolean> {
-    const vehicle = new Vehicle(vehicleData);
-    const connection = await db.getConnection();
+    return await sequelize.transaction(async (t) => {
+      await Vehicle.create(
+        {
+          user_id: Number(vehicleData.user_id),
+          make: vehicleData.make,
+          model: vehicleData.model,
+          year: Number(vehicleData.year),
+          color: vehicleData.color,
+          license_plate: vehicleData.license_plate,
+        },
+        { transaction: t }
+      );
 
-    try {
-      await connection.beginTransaction();
+      await User.update(
+        {
+          is_driver: true,
+          license_number: vehicleData.license_number ?? null,
+        },
+        {
+          where: { id: Number(vehicleData.user_id) },
+          transaction: t,
+        }
+      );
 
-      const vehicleQuery = `
-        INSERT INTO vehicles (user_id, make, model, year, color, license_plate) 
-        VALUES (?, ?, ?, ?, ?, ?)
-      `;
-      const vehicleValues = [
-        vehicle.user_id,
-        vehicle.make,
-        vehicle.model,
-        vehicle.year,
-        vehicle.color,
-        vehicle.license_plate,
-      ];
-      await connection.execute(vehicleQuery, vehicleValues);
-
-      const userQuery = `
-        UPDATE users 
-        SET is_driver = TRUE, license_number = ? 
-        WHERE id = ?
-      `;
-      await connection.execute(userQuery, [
-        vehicle.license_number ?? null,
-        vehicle.user_id,
-      ]);
-
-      await connection.commit();
       return true;
-    } catch (error) {
-      await connection.rollback();
-      throw error;
-    } finally {
-      connection.release();
-    }
+    });
   }
 }
