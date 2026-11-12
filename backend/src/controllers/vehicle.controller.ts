@@ -13,7 +13,10 @@ export class VehicleController {
         message: "Vehículo registrado y perfil actualizado a conductor",
       });
     } catch (error: any) {
-      if (error.code === "ER_DUP_ENTRY") {
+      if (
+        error?.name === "SequelizeUniqueConstraintError" ||
+        error?.parent?.code === "ER_DUP_ENTRY"
+      ) {
         return res
           .status(400)
           .json({ message: "Esa placa ya está registrada en el sistema" });

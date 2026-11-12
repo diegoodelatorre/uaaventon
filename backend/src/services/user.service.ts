@@ -1,27 +1,18 @@
-import type { ResultSetHeader, RowDataPacket } from "mysql2";
-import db from "../conf/db.js";
 import { User, type IUser } from "../models/index.js";
 
 export class UserService {
-  public async create(userData: IUser): Promise<ResultSetHeader> {
-    const user = new User(userData);
-    const query = `
-      INSERT INTO users (first_name, last_name, uaa_email, password_hash) 
-      VALUES (?, ?, ?, ?)
-    `;
-    const values = [
-      user.first_name,
-      user.last_name,
-      user.uaa_email,
-      user.password_hash,
-    ];
-    const [result] = await db.execute<ResultSetHeader>(query, values);
-    return result;
+  public async create(userData: IUser): Promise<User> {
+    return await User.create({
+      first_name: userData.first_name,
+      last_name: userData.last_name,
+      uaa_email: userData.uaa_email,
+      password_hash: userData.password_hash,
+    });
   }
 
-  public async findByEmail(uaa_email: string): Promise<IUser | undefined> {
-    const query = `SELECT * FROM users WHERE uaa_email = ?`;
-    const [rows] = await db.execute<RowDataPacket[]>(query, [uaa_email]);
-    return rows[0] as IUser | undefined;
+  public async findByEmail(uaa_email: string): Promise<User | null> {
+    return await User.findOne({
+      where: { uaa_email },
+    });
   }
 }

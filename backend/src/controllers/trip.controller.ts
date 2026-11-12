@@ -8,10 +8,10 @@ export class TripController {
 
   public async publishTrip(req: Request, res: Response) {
     try {
-      const { driver_id } = req.body;
+      const driver_id = Number(req.body.driver_id);
 
       const user = await tripService.verifyDriverStatus(driver_id);
-      if (!user || user.is_driver === 0) {
+      if (!user || !user.is_driver) {
         return res.status(403).json({
           message: "Acceso denegado: Debes registrarte como conductor primero.",
         });
