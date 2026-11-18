@@ -1,25 +1,21 @@
-import { Router } from 'express';
-import { body } from 'express-validator';
-import { registerUser } from '../controllers/auth.controller.js';
+import { Router } from "express";
+import { AuthController } from "../controllers/auth.controller.js";
+import { registerUserValidator } from "../validators/auth.validator.js";
+import { validate } from "../middlewares/validateData.js";
 
-const router = Router();
+const authController = new AuthController();
 
-router.post(
-  '/register',
-  [
-    body('first_name').notEmpty().withMessage('El nombre es obligatorio'),
-    body('last_name').notEmpty().withMessage('El apellido es obligatorio'),
-    body('uaa_email')
-      .isEmail().withMessage('Debe ser un correo válido')
-      .custom((value) => {
-        if (!value.endsWith('@edu.uaa.mx')) {
-          throw new Error('El correo debe ser institucional (@edu.uaa.mx)');
-        }
-        return true;
-      }),
-    body('password').isLength({ min: 8 }).withMessage('La contraseña debe tener al menos 8 caracteres')
-  ],
-  registerUser
-);
+export class AuthRoutes {
+  static get router(): Router {
+    const router = Router();
 
-export default router;
+    router.post(
+      "/register",
+      registerUserValidator,
+      validate,
+      authController.registerUser,
+    );
+
+    return router;
+  }
+}

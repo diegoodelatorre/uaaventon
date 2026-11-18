@@ -2,44 +2,32 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
 import { environment } from '../../environments/environment';
-
-// --- Regla Arquitectónica: Tipado estricto (Cero 'any') ---
-export interface RegisterCredentials {
-  first_name: string;
-  last_name: string;
-  uaa_email: string;
-  password?: string;
-}
+import { RegisterRequest } from '../models/user.model';
+import { ApiResponse } from '../models/api-response.model';
 
 export interface UserPayload {
   id: number;
   uaa_email: string;
-  is_driver: boolean; // Vital para la US06
+  is_driver: boolean;
 }
 
-export interface AuthResponse {
-  message: string;
+export interface AuthResponse extends ApiResponse {
   token?: string;
   user?: UserPayload;
 }
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class AuthService {
-  // Regla Arquitectónica: Inyección vía inject(), prohibido constructor
   private readonly http = inject(HttpClient);
-
-  // Regla Arquitectónica: URL dinámica desde environment
   private readonly apiUrl = `${environment.apiUrl}/auth`;
   private readonly TOKEN_KEY = 'uaaventon_token';
 
-  // Mantenemos tu método de registro pero ahora con tipado estricto
-  register(userData: RegisterCredentials): Observable<AuthResponse> {
-    return this.http.post<AuthResponse>(`${this.apiUrl}/register`, userData);
+  register(userData: RegisterRequest): Observable<ApiResponse> {
+    return this.http.post<ApiResponse>(`${this.apiUrl}/register`, userData);
   }
 
-  // Nuevo método de Login que guarda el JWT automáticamente
   login(credentials: { uaa_email: string; password: string }): Observable<AuthResponse> {
     return this.http.post<AuthResponse>(`${this.apiUrl}/login`, credentials).pipe(
       tap((response) => {
@@ -60,7 +48,6 @@ export class AuthService {
 
     try {
       const payload = JSON.parse(atob(token.split('.')[1]));
-      // Verificamos si el token ya expiró
       const isExpired = payload.exp * 1000 < Date.now();
       if (isExpired) {
         this.logout();
@@ -77,7 +64,6 @@ export class AuthService {
     if (!token) return false;
 
     try {
-      // Extraemos el rol directamente del payload del token JWT
       const payload = JSON.parse(atob(token.split('.')[1]));
       return Boolean(payload.is_driver);
     } catch {
